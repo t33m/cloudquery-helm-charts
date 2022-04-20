@@ -1,0 +1,11 @@
+{{- if .Values.libpqCaBundle }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cloudquery.fullname" . }}-libpq-ca-bundle
+  labels:
+  {{- include "cloudquery.labels" . | nindent 4 }}
+data:
+  root.crt: |-
+    {{ .Files.Get .Values.libpqCaBundle | nindent 4}}
+{{- end }}

@@ -39,7 +39,7 @@ serviceAccount:
 # This can be useful for auth tokens, etc
 # Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other)
 envRenderSecret: {}
-#  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=disable"
+#  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=verify-full&sslrootcert=/app/ssl/root.crt"
 
   # For AWS see https://docs.cloudquery.io/docs/getting-started/getting-started-with-aws
   # AWS_ACCESS_KEY_ID: ""
@@ -115,3 +115,5 @@ secrets-store-csi-driver:
   syncSecret:
     # -- Enable integration with aws secrets store service
     enabled: true
+
+# libpqCaBundle: local/path/to//root.crt

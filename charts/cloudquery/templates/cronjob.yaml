@@ -37,6 +37,11 @@ spec:
                 mountPath: /app/config
               - name: cq
                 mountPath: /app/.cq
+              {{- if .Values.libpqCaBundle }}
+              - name: libpq-ca-bundle
+                mountPath: /app/ssl/
+                readOnly: true
+              {{- end }}
               {{- if .Values.ascp.enabled }}
               - name: secrets-store-inline
                 mountPath: "/mnt/secrets-store"
@@ -50,6 +55,14 @@ spec:
               readOnly: true
               volumeAttributes:
                 secretProviderClass: {{ include "cloudquery.fullname" . }}
+          {{- end }}
+          {{- if .Values.libpqCaBundle }}
+          - name: libpq-ca-bundle
+            configMap:
+              name: {{ include "cloudquery.fullname" . }}-libpq-ca-bundle
+              items:
+              - key: root.crt
+                path: root.crt
           {{- end }}
           - name: config
             configMap:
